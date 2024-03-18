@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="Style/styles.css">
+    
+  <script src="Script/Script.js"></script>
+  <script src="Script/Scriptvalidation.js"></script>
+</head>
+<body class="body">
+    
+  <div class="cotenedor">
+        <h1>Atutos y Más</h1>
+        
+        <hr class="linea"/>
+        <form id="miFormulario" action="php/enviar.php" method="POST" >
+            <div class="formulario">
+                <div class="crearbd">
+                    <h1>Crear Base de Datos</h1>
+                    <div class="containergrub">
+                        <label for="CreaBD">Digita Nombre</label>
+                        <input type="text"  name="CreaBD" id="CreaBD" maxlength="15"  autocomplete="off" />
+                        
+                    </div>
+                    <span id="CreaBD-error"></span>
+              
+                    <div class="botonesDB">
+                        <div class="btnGuardar" name="btnCrear" id="btnCrear" onclick="CrearDB('btnCrear')"  >Crear</div>
+                        <div class="btnEliminar" name="btnEliminarDB" id="btnEliminarDB" onclick="EliminarDB('btnEliminarDB')"  >Eliminar</div>
+                    </div>
+                </div>
+
+                <div class="crearbd">
+                    <h1>Crear Tabla</h1>
+
+                    
+                    <label for="CreaTabla">Digita Nombre</label>
+                        <textarea  type="text"  name="CreaTabla" id="CreaTabla"  rows="4"  autocomplete="off"></textarea>
+                    
+                    <span id="CreaTabla-error"></span>
+                    <div class="botones">
+                        <button class="btnGuardar" name="btnCrear" id="btnCrear" >Crear</button>
+                        <button class="btnEliminar" name="btnEliminarDB" id="btnEliminarDB" type="submit" >Eliminar</button>
+                    </div>
+                </div>
+
+                <div class="ingreso">
+                    <h1>Ingresa una Placa</h1>
+                    <div class="containergrub">
+                        <label for="Placa">Digita la Palca</label>
+                        <input type="text" class="Placa" name="Placa" id="Placa" maxlength="6"  autocomplete="off" />
+                    </div>
+                    <span id="Placa-error"></span>
+                    <div clase="manejardatos">
+                        <div class="containergrub">
+                            <label for="Marca">Digita Marca</label>
+                            <input type="text" name="Marca" id="Marca" class="Marca" maxlength="15"  autocomplete="off" />
+                        </div>
+                        <br/>
+                        <div class="containergrub">
+                            <label for="Modelo">Digita Modelo</label>
+                            <input type="text"  name="Modelo" id="Modelo"  title="Ingresa solo números"  autocomplete="off" />
+                        
+                        </div>
+                        <span id="Modelo-error"></span>
+                        <br/>
+                        <div class="containergrub">
+                            <label for="Color">Digita Color</label>
+                            <input type="text" name="Color" id="Color" maxlength="20"  autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="botones">
+                        <button class="btnGuardar" name="btnGuardar" id="btnGuardar"  type="submit">Guardar</button>
+                        <button class="btnActualizar" name="btnActualizar" id="btnActualizar" type="submit">Actualizar</button>
+                        <br/>
+                        <button class="btnLimpiar" name="btnLimpiar" id="btnLimpiar" >Limpiar</button>
+                        <button class="btnEliminar" name="btnEliminar" id="btnEliminar" type="submit" >Eliminar</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+  </div>
+ 
+
+   
+</body>
+</html>
