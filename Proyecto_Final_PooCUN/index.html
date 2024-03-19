@@ -18,7 +18,7 @@
         <form id="miFormulario" action="php/enviar.php" method="POST" >
             <div class="formulario">
                 <div class="crearbd">
-                    <h1>Crear Base de Datos</h1>
+                    <h3>Crear Base de Datos</h3>
                     <div class="containergrub">
                         <label for="CreaBD">Digita Nombre</label>
                         <input type="text"  name="CreaBD" id="CreaBD" maxlength="15"  autocomplete="off" />
@@ -28,26 +28,41 @@
               
                     <div class="botonesDB">
                         <div class="btnGuardar" name="btnCrear" id="btnCrear" onclick="CrearDB('btnCrear')"  >Crear</div>
-                        <div class="btnEliminar" name="btnEliminarDB" id="btnEliminarDB" onclick="EliminarDB('btnEliminarDB')"  >Eliminar</div>
+                        <div class="btnActualizar" name="btnverDB" id="btnverDB" onclick="verDB('btnverDB')" >ver BD</div>
                     </div>
+                    <h5>Listado de BD creadas</h5>   
+                    <div class="BD_GRup">
+                        <div id="listaBasesDatos">
+                                
+
+                        </div>
+                    </div> 
                 </div>
 
                 <div class="crearbd">
-                    <h1>Crear Tabla</h1>
-
+                    <h3>Crear Tabla</h3>
+                    <h5>Selecicona primero la base de datos creada</h5>
+                        <select id="miSelectbd">
+                            <option value="no">Selecciona BD</option>
+                        </select>
                     
-                    <label for="CreaTabla">Digita Nombre</label>
-                        <textarea  type="text"  name="CreaTabla" id="CreaTabla"  rows="4"  autocomplete="off"></textarea>
+                    <label for="CreaTabla">Sql tabla </label>
+                        <textarea  type="text"  name="CreaTabla" id="CreaTabla"  rows="5"  autocomplete="off">create table auto (placa varchar(6) primary key, marca varchar(15) not null, modelo int not null,color varchar(10) not null);</textarea>
                     
                     <span id="CreaTabla-error"></span>
-                    <div class="botones">
-                        <button class="btnGuardar" name="btnCrear" id="btnCrear" >Crear</button>
-                        <button class="btnEliminar" name="btnEliminarDB" id="btnEliminarDB" type="submit" >Eliminar</button>
+                    <div class="botonesTabla">
+                        <div class="btnGuardar" name="btnCrear" id="btnCrear" onclick="btnCrearTable('btnCrearTable')">Crear</div>
+                        
                     </div>
                 </div>
 
                 <div class="ingreso">
-                    <h1>Ingresa una Placa</h1>
+                    <h3>Ingresa una Placa</h3>
+                    <h5>selecciona la base de datos </h5>
+                    <select id="miSelectbdT">
+                        <option value="no">Selecciona BD</option>
+                    </select>
+                    <p>Solo se pude agregar en la tabla auto</p>
                     <div class="containergrub">
                         <label for="Placa">Digita la Palca</label>
                         <input type="text" class="Placa" name="Placa" id="Placa" maxlength="6"  autocomplete="off" />
@@ -71,12 +86,13 @@
                             <input type="text" name="Color" id="Color" maxlength="20"  autocomplete="off" />
                         </div>
                     </div>
+                    <span id="Datos-error"></span>
                     <div class="botones">
-                        <button class="btnGuardar" name="btnGuardar" id="btnGuardar"  type="submit">Guardar</button>
-                        <button class="btnActualizar" name="btnActualizar" id="btnActualizar" type="submit">Actualizar</button>
-                        <br/>
-                        <button class="btnLimpiar" name="btnLimpiar" id="btnLimpiar" >Limpiar</button>
-                        <button class="btnEliminar" name="btnEliminar" id="btnEliminar" type="submit" >Eliminar</button>
+                        <div class="btnGuardar" name="btnGuardar" id="btnGuardar" onclick="btnActividad('btnGuardar')">Guardar</div>
+                        <div class="btnActualizar" name="btnActualizar" id="btnActualizar" onclick="btnActividad('btnActualizar')">Actualizar</div>
+                    
+                        <div class="btnLimpiar" name="btnLimpiar" id="btnLimpiar"  onclick="limpiarbusqueda()">Limpiar</div>
+                        <div class="btnEliminar" name="btnEliminar" id="btnEliminar" onclick="btnActividad('btnEliminar')">Eliminar</div>
                     </div>
 
                 </div>
@@ -87,4 +103,5 @@
 
    
 </body>
+<script>verDB("mensaje");</script>
 </html>

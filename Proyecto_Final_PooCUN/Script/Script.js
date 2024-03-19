@@ -28,9 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const regex = /^[A-Z]{3}\d{3}$|^[A-Z]{3}\d{2}[A-Z]$/;
         if (regex.test(placaValue)) {
             mensajeError.textContent = '';
+
+            buscarTabla(placaValue);
+
+
         } else {
             mensajeError.textContent = 'Placa inválida.';
+            
         }
+
+
+
+
+
     });
 
     CreaBDInput.addEventListener('input', () => {
@@ -81,4 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
     textarea.addEventListener('input', () => {
         textarea.value = textarea.value.toLowerCase();
     });
+
+
 });
+
+

@@ -48,11 +48,18 @@ function verDB(mensaje) {
    // alert("Entro en ver BD")
     const listaBasesDatos = document.getElementById('listaBasesDatos');
     const miSelectbd = document.getElementById('miSelectbd');
+    const miSelectbdT = document.getElementById('miSelectbdT');
+    
     miSelectbd.innerHTML = '';
+    miSelectbdT.innerHTML = '';
     const optionDefault = document.createElement('option');
     optionDefault.value = "no";
     optionDefault.textContent = "Selecciona BD";
     miSelectbd.appendChild(optionDefault);
+    const optionDefaultT = document.createElement('option');
+    optionDefaultT.value = "no";
+    optionDefaultT.textContent = "Selecciona BD";
+    miSelectbdT.appendChild(optionDefaultT)
 
     
     fetch('php/phpauxiliar/busqueda.php')
@@ -110,6 +117,12 @@ function verDB(mensaje) {
                     option.value = baseDatos;
                     option.textContent = baseDatos;
                     miSelectbd.appendChild(option);
+
+                // Agregar opción al segundo select
+                const optionT = document.createElement('option');
+                optionT.value = baseDatos;
+                optionT.textContent = baseDatos;
+                miSelectbdT.appendChild(optionT);
 
                 });
 
@@ -171,9 +184,13 @@ function btnCrearTable(mensaje){
     const valueBD = document.getElementById('miSelectbd').value;
     const tablaBD = document.getElementById('CreaTabla').value;
     const mensajeError = document.getElementById('CreaTabla-error');
+    const regex = /\bcreate\s+table\b/;
    // alert("miSelectbd"+valueBD);
  //   alert("CreaTabla"+tablaBD);
-
+ if(!regex.test(tablaBD)){
+    mensajeError.innerText = "esto no esta creando una tabla";
+ }
+else
     if(valueBD ==="no" ){
         mensajeError.innerText = "Selecciona una base de datos correcta";
     }else
@@ -212,3 +229,241 @@ function btnCrearTable(mensaje){
 
 }
 
+
+
+
+//funciones para el ingresar placa
+function btnActividad(mensaje){
+   
+
+    const valuePlaca = document.getElementById('Placa').value;
+    const valueMarca = document.getElementById('Marca').value;
+    const valueModelo = document.getElementById('Modelo').value;
+    const valueColor = document.getElementById('Color').value;
+    const miSelectbdT = document.getElementById('miSelectbdT').value;
+    const mensajeError = document.getElementById('Datos-error');
+    let validadr = valuePlaca.trim();
+    let validadrmarca = valueMarca.trim();
+    let validadrmodelo = valueModelo.trim();
+    let validadrcolor = valueColor.trim();
+    const regex = /^[A-Z]{3}\d{3}$|^[A-Z]{3}\d{2}[A-Z]$/;
+    //alert(miSelectbdT);
+    
+    if(mensaje==="btnGuardar"){
+        if(validadr.length === 0  || validadrmarca.length === 0  || validadrmodelo.length === 0  || validadrcolor.length === 0 || miSelectbdT==="no" ){
+            alert("Selecione Base de datos y digite todos los campos");
+        }else
+        if(!regex.test(valuePlaca)){
+            mensajeError.innerHTML ="placa mal digitada";
+
+        }else{
+        const formData = new FormData(); //actividad local del if
+        formData.append('bd', miSelectbdT); // Agregar el valor de miSelectbd al FormData
+        formData.append('actividad', 'btnGuardar'); 
+        formData.append('tabla', 'auto'); 
+        formData.append('placa', valuePlaca); 
+        formData.append('marca', valueMarca); 
+        formData.append('modelo', valueModelo); 
+        formData.append('color', valueColor); 
+        fetch('php/General.php', {
+            method: 'POST',
+            body: formData, // enviamos los datos 
+          
+        })
+        
+        .then(response => response.text())
+        .then(data =>{
+               
+                    mensajeError.innerText = "Rgistrado";
+                
+          
+                       
+           
+            console.error(data);
+            
+           
+
+        })
+        .catch(error => { 
+                        console.error('Error:' + error);
+        });
+
+
+
+    }
+    
+}else
+    if(mensaje==="btnActualizar"){
+    alert("actualizar");
+
+    if(validadr.length === 0  || validadrmarca.length === 0  || validadrmodelo.length === 0  || validadrcolor.length === 0 || miSelectbdT==="no" ){
+        alert("Selecione Base de datos y digite una placa");
+    }
+    if(!regex.test(valuePlaca)){
+        mensajeError.innerHTML ="placa mal digitada";
+
+    }
+    else{
+
+
+
+    const formData = new FormData(); //actividad local del if
+    formData.append('bd', miSelectbdT); // Agregar el valor de miSelectbd al FormData
+    formData.append('actividad', 'btnActualizar'); 
+    formData.append('tabla', 'auto'); 
+    formData.append('placa', valuePlaca); 
+    formData.append('marca', valueMarca); 
+    formData.append('modelo', valueModelo); 
+    formData.append('color', valueColor); 
+    fetch('php/General.php', {
+        method: 'POST',
+        body: formData, // enviamos los datos 
+      
+    })
+    
+    .then(response => response.text())
+    .then(data =>{
+            if("error al actualizar los datos"===data.trim()){
+           
+            mensajeError.innerText = "Placa ya registrada";
+            }
+            else{
+                mensajeError.innerText = data.trim();
+                limpiarbusqueda();
+                alert("Datos Actualizados");
+
+            }
+      
+                   
+       
+        console.error(data);
+        
+       
+
+    })
+    .catch(error => { 
+                    console.error('Error:' + error);
+    });
+
+   
+    }
+}else
+    if(mensaje==="btnEliminar"){
+    alert("Eliminar");
+    
+    if(validadr.length === 0 ){
+        alert("Selecione Base de datos y digite una placa");
+    }else{
+    const formData = new FormData(); //actividad local del if
+    formData.append('bd', miSelectbdT); // Agregar el valor de miSelectbd al FormData
+    formData.append('actividad', 'btnEliminar'); 
+    formData.append('tabla', 'auto'); 
+    formData.append('placa', valuePlaca); 
+
+
+
+
+
+    fetch('php/General.php', {
+        method: 'POST',
+        body: formData, // enviamos los datos 
+      
+    })
+    
+    .then(response => response.text())
+    .then(data =>{
+            if("error al eliminar los datos"===data.trim()){
+           
+            mensajeError.innerText = "Placa eliminada";
+            }
+            else{
+                mensajeError.innerText = data.trim();
+                limpiarbusqueda();
+                alert("Datos Eliminados");
+
+            }
+      
+                   
+       
+        console.error(data);
+        
+       
+
+    })
+    .catch(error => { 
+                    console.error('Error:' + error);
+    });
+
+
+
+
+
+    }
+}
+
+}
+
+function buscarTabla(mensaje) {
+    mensaje;
+  
+
+    const mensajeError = document.getElementById('Datos-error');
+    const miSelectbdT = document.getElementById('miSelectbdT').value;
+
+    if (miSelectbdT === 'no') {
+        mensajeError.innerText = 'Selecciona base de datos';
+        limpiarbusqueda();
+
+    } else {
+        //alert("esta es la placa " + mensaje);
+        const formData = new FormData(); //actividad local del if
+        formData.append('bd', miSelectbdT); // Agregar el valor de miSelectbd al FormData
+        formData.append('actividad', 'buscar');
+        formData.append('placa', mensaje);
+        formData.append('tabla', 'auto');
+
+        fetch('php/General.php', {
+                method: 'POST',
+                body: formData, // enviamos los datos 
+
+            })
+            .then(response => response.json()) // Convertir la respuesta a JSON
+            .then(data => {
+                if (data.error) {
+                    console.error(data.error);
+                } else {
+                    // Procesar los datos recibidos
+                    data.forEach(dato => {
+                        console.log('Placa:', dato.placa);
+                        document.getElementById('Marca').value = dato.marca;
+                        console.log('Marca:', dato.marca);
+                        document.getElementById('Modelo').value = dato.modelo
+                        console.log('Modelo:', dato.modelo);
+                        document.getElementById('Color').value = dato.color
+                        console.log('Color:', dato.color);
+                        // Continúa con los demás datos que tengas en tu objeto JSON
+                    });
+
+                }
+            })
+            .catch(error => {
+                console.error('Error:' + error);
+            });
+    }
+}
+
+
+function limpiarbusqueda(){
+        document.getElementById('Placa').value = '';
+        document.getElementById('Marca').value = '';
+        document.getElementById('Modelo').value = '';
+        document.getElementById('Color').value = '';
+        document.getElementById('Placa-error').textContent = '';
+        document.getElementById('Marca-error').textContent = '';
+        document.getElementById('Modelo-error').textContent = '';
+        document.getElementById('Color-error').textContent = ''; 
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    verDB('mensaje');
+});

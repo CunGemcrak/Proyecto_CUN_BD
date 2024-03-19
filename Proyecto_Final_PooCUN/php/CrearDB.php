@@ -41,11 +41,4 @@ if ($conn->query($sql) === true) {
 }
 
 $conn->close();
-
-
-
-
-
-
-
 ?>
