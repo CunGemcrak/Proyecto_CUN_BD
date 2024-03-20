@@ -10,15 +10,16 @@ if (isset($_POST["bd"])) {
         $conn->select_db('auxili_db_proyecto');
          try {   
                 $sql = "DELETE FROM bd WHERE nombre = '$dbname'";
+                $conn->query($sql);
                 
                 // Ejecutar la consulta SQL
-                if ($conn->query($sql)) {
+             /*   if ($conn->query($sql)) {
                     // La eliminación se realizó correctamente
-                    echo "Registro eliminado correctamente";
+               //     echo "Registro eliminado correctamente";
                 } else {
                     // Hubo un error al ejecutar la consulta
-                    echo "Error al eliminar el registro: ";
-                }
+                //    echo "Error al eliminar el registro: ";
+                }*/
             } catch (Exception $e) {
                 echo "Error al crear la base de datos ".$e->getMessage();
             }

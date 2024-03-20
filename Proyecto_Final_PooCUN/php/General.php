@@ -3,17 +3,27 @@
     include("conexion.php");
 
     $accion = $_POST['actividad'];
+    $tabla = $_POST['tabla'];
+    // Consulta SQL para verificar la existencia de la tabla
+    $sql_check_table = "SHOW TABLES LIKE '$tabla'";
+    $result_check_table = $conn->query($sql_check_table);
+    if ($result_check_table && $result_check_table->num_rows > 0){
 
+   
 
     if ($accion === 'btnGuardar') {
         
     $dbname = $_POST['bd'];
     
-    $tabla = $_POST['tabla'];
+    
     $placa = $_POST['placa'];
     $marca = $_POST['marca'];
     $modelo = $_POST['modelo'];
     $color = $_POST['color'];
+
+
+
+
         $sql_insert_value = "INSERT INTO $tabla (placa, marca, modelo, color) VALUES ('$placa',' $marca', '$modelo', '$color')";
         //$stmt = $conn->prepare($sql_insert_value);
        // $stmt->bind_param("ssss", );
@@ -26,7 +36,53 @@
 
       
     
-}if ($accion === 'buscar') {
+}
+
+else
+if($accion=="btnActualizar"){
+   
+    
+    $tabla = $_POST['tabla'];
+    $placa = $_POST['placa'];
+    $marca = $_POST['marca'];
+    $modelo = $_POST['modelo'];
+    $color = $_POST['color'];
+
+    $placa = $_POST['placa'];
+    $tabla = $_POST['tabla'];
+    $sql_select = "UPDATE $tabla SET placa = '$placa', marca = '$marca', modelo = '$modelo', color = '$color' WHERE placa = '$placa'";
+    if($conn->query($sql_select)===true){
+        echo "Datos Actualizados";
+    }else{
+        echo "error al actualizar los datos";
+    }
+
+}else
+if($accion== "btnEliminar"){
+    $tabla = $_POST['tabla'];
+    $placa = $_POST['placa'];
+
+    $sql_select = "DELETE FROM $tabla WHERE placa='$placa '";
+
+if($conn->query($sql_select)===true){
+        echo "Datos Eliminados";
+    }else{
+        echo "error al eliminar los datos";
+    }
+
+
+
+
+}
+
+
+}else{
+    echo "No hay tablas en $dbname";
+}
+
+
+
+if ($accion === 'buscar') {
     try {
         $placa = $_POST['placa'];
         $tabla = $_POST['tabla'];
@@ -49,61 +105,6 @@
     } catch (Exception $e) {
         echo json_encode(array("error" => "Error en la búsqueda: " . $e->getMessage()));
     }
-}
-else
-if($accion=="btnActualizar"){
-   
-    
-    $tabla = $_POST['tabla'];
-    $placa = $_POST['placa'];
-    $marca = $_POST['marca'];
-    $modelo = $_POST['modelo'];
-    $color = $_POST['color'];
-
-    $placa = $_POST['placa'];
-    $tabla = $_POST['tabla'];
-    $sql_select = "UPDATE $tabla SET placa = '$placa', marca = '$marca', modelo = '$modelo', color = '$color' WHERE placa = '$placa'";
-    if($conn->query($sql_select)===true){
-        echo "Datos Actualizados";
-    }else{
-        echo "error al actualizar los datos";
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-}else
-if($accion== "btnEliminar"){
-    $tabla = $_POST['tabla'];
-    $placa = $_POST['placa'];
-
-    $sql_select = "DELETE FROM $tabla WHERE placa='$placa '";
-
-if($conn->query($sql_select)===true){
-        echo "Datos Eliminados";
-    }else{
-        echo "error al eliminar los datos";
-    }
-
-
-
-
-}
-
-
-
-
-else {
-    echo "Faltan datos para realizar la operación";
 }
 
 $conn->close();
