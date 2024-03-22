@@ -162,12 +162,9 @@ function eliminarBaseDatos(event) {
        
          mensajeError.innerText = data.trim();
          var alert = alertify.alert("Eliminar Base de Datos", data.trim()).set('label', 'Aceptar'); 
-           // alert(data.trim());
-       
-          //  alert('Error al borrar BD');
-        
+      
         console.error(data);
-       // alert(data);  // Muestra la respuesta del servidor en un alert
+       
         verDB('mensaje');
        
 
@@ -180,13 +177,7 @@ function eliminarBaseDatos(event) {
     var alert = alertify.alert("Eliminar Base de Datos", "Error al eliminar la base de datos").set('label', 'Aceptar'); 
         console.error("error"+error);
     
-   }
-
-
-
-   
-
-    
+   }    
 }
 
 
